@@ -65,7 +65,7 @@ Now you need to modify the `.env` file to give it all credentials needed for the
 * GF_SECURITY_ADMIN_PASSWORD: grafana admin password
 * CLOUDFLARE_API_TOKEN: API token for your root domain on Cloudflare
 
-By running `sh prepare-folders.sh` the folder structure will be created at `BASE_DIR` and the `docker-compose.yml` will be modified to point all mount pats to `BASE_DIR` as well.
+By running `sh prepare-folders.sh` the folder structure will be created at `BASE_DIR` and the `docker-compose.yml` will be modified to point all mount paths to `BASE_DIR` as well.
 You can find the modified compose file at `BASE_DIR/compose-files/monitoring/` from there you can star the stack using
 
 ```sh

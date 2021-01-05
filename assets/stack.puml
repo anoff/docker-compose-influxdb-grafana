@@ -1,0 +1,36 @@
+@startuml stack
+skinparam monochrome true
+skinparam defaulttextalignment center
+
+frame "Local Network" as lan {
+  interface "host<i>:8086" as influx
+  interface "host<i>:3000" as grafana_api
+  frame "Docker host" as host {
+    interface "localhost<i>:8888" as chronograf
+    component Docker as docker1 {
+      artifact "influxdb:1.8" as influxdb
+      artifact "telegraf:latest" as telegraf
+      artifact "chronograf:latest" as chrono
+      artifact "grafana:latest" as grafana
+      artifact "traefik:v2.3" as traefik
+      artifact "cloudflare-ddns:latest" as ddns
+    }
+  }
+}
+
+frame "Internet" as www {
+  interface "https://grafana.sub.root.io" as grafana_www
+  interface "http://influxdb.sub.root.io" as influx_www
+  component Cloudflare as cloudflare
+}
+influxdb -- influx
+chrono -- chronograf
+telegraf --(0 influxdb
+chrono --(0 influxdb
+grafana -- grafana_api
+traefik .. grafana
+traefik .. influxdb
+ddns --(0 cloudflare: update DNS records
+grafana -- grafana_www
+influxdb -- influx_www
+@enduml
